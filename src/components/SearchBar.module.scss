@@ -1,0 +1,43 @@
+.searchContent {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.searchContainer {
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border: 1px solid #ccc;
+  border-radius: 10px;
+
+  padding-right: 30px;
+}
+
+.searchInput {
+  width: 300px;
+
+  padding: 10px;
+  font-size: 16px;
+
+  border: none;
+  outline: none;
+
+  flex-grow: 1;
+
+  border-radius: 10px;
+
+  background: transparent;
+}
+
+.searchIcon {
+  position: absolute;
+  right: 10px;
+  color: #888;
+}

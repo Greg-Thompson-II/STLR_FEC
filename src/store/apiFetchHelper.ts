@@ -2,6 +2,9 @@ import axios from "axios";
 
 import type { AxiosResponse } from "axios";
 
+export const API_KEY = import.meta.env.VITE_GIPHY_API_KEY;
+export const BASE_URL = "https://api.giphy.com/v1/gifs/";
+
 export async function buildAxiosRequest<ResponseType, DataType>(
   method: "GET" | "POST" | "PUT" | "DELETE",
   url: string,
