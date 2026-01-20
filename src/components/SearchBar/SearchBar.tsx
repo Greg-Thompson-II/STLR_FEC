@@ -1,17 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styles from "./SearchBar.module.scss";
-import { SearchIcon } from "../assets/icons/SearchIcon";
-import { API_KEY, BASE_URL } from "../store/apiFetchHelper";
-import type { Gif } from "../App";
+import { SearchIcon } from "../../assets/icons/SearchIcon";
+import { API_KEY, BASE_URL } from "../../store/apiFetchHelper";
+import type { Gif } from "../../App";
 
 type Props = {
-  // gifs: Gif[];
+  searchTerm: string;
+  setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
   setGifs: React.Dispatch<React.SetStateAction<Gif[]>>;
 };
 
-export default function SearchBar({ setGifs }: Props) {
-  const [searchTerm, setSearchTerm] = useState("");
-
+export default function SearchBar({
+  searchTerm,
+  setSearchTerm,
+  setGifs,
+}: Props) {
   const handleSubmitSearch = () => {
     const fetchSearchedGifs = async () => {
       try {
@@ -46,9 +49,10 @@ export default function SearchBar({ setGifs }: Props) {
               }
             }}
           />
-          <SearchIcon className={styles.searchIcon} />
+          <button className={styles.searchButton} onClick={handleSubmitSearch}>
+            <SearchIcon className={styles.searchIcon} />
+          </button>
         </div>
-        <button onClick={handleSubmitSearch}>Search</button>
       </div>
     </>
   );

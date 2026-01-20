@@ -1,0 +1,65 @@
+.masonryItem {
+  position: relative;
+  display: inline-block;
+
+  margin-bottom: 8px;
+
+  width: 100%;
+  overflow: hidden;
+
+  &:hover .copyButton {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+video {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.copyButton {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease-in-out;
+
+  background-color: rgba(0, 0, 0, 0.75);
+
+  color: white;
+
+  border: none;
+  border-radius: 20px;
+
+  padding: 8px 12px;
+
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgb(26, 26, 26);
+  }
+
+  &.active {
+    opacity: 1;
+    pointer-events: auto;
+
+    background-color: #28a745;
+  }
+
+  span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+}
+
+.checkIcon {
+  path {
+    fill: #28a745 !important;
+  }
+}

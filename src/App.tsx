@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import reactLogo from "./assets/react.svg";
 // import viteLogo from "/vite.svg";
 import "./App.css";
-import SearchBar from "./components/SearchBar";
+import SearchBar from "./components/SearchBar/SearchBar";
 import { BASE_URL, API_KEY } from "./store/apiFetchHelper";
 import styles from "./App.module.scss";
+import GifVideoBlock from "./components/GifVideoBlock/GifVideoBlock";
 
 export type Gif = {
   id: string;
@@ -12,13 +12,12 @@ export type Gif = {
   images: {
     original: {
       mp4: string;
+      url: string;
     };
   };
 };
 
 function App() {
-  // const [count, setCount] = useState(0);
-
   const [gifs, setGifs] = useState<Gif[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -42,6 +41,7 @@ function App() {
 
     if (API_KEY) {
       fetchTrendingGifs();
+      // console.log("Fetched trending GIFs");
     } else {
       console.error("GIPHY API Key not found in environment variables.");
     }
@@ -53,24 +53,16 @@ function App() {
         <p>Loading GIFs...</p>
       ) : (
         <div className={styles.trendingContent}>
-          <SearchBar setGifs={setGifs} />
+          <SearchBar
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            setGifs={setGifs}
+          />
           <section>
             <p>Trending Gifs:</p>
             <div className={styles.masonryContainer}>
               {gifs.map((gif) => (
-                <video
-                  className={styles.masonryItem}
-                  width="320"
-                  loop
-                  autoPlay
-                  muted
-                  key={gif.id}
-                >
-                  <source
-                    src={gif.images.original.mp4}
-                    type="video/mp4"
-                  ></source>
-                </video>
+                <GifVideoBlock key={gif.id} gif={gif} />
               ))}
             </div>
           </section>

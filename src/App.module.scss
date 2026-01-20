@@ -11,34 +11,10 @@
   padding: 20px;
   width: calc(100% - 20px);
 
-  span {
-    display: flex;
-    justify-content: space-between;
-
-    flex-wrap: wrap;
-    width: 100%;
-    // align-items: center;
-
-    video {
-      object-fit: contain;
-
-      height: auto;
-      max-width: 25%;
-    }
-  }
-
   .masonryContainer {
     column-width: 320px;
-    column-gap: 0px;
+    column-gap: 10px;
 
     contain: layout;
-  }
-
-  masonryItem {
-    break-inside: avoid;
-    margin-bottom: 16px;
-
-    display: block;
-    width: 100%;
   }
 }
