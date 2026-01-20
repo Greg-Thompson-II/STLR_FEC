@@ -5,11 +5,11 @@ import { API_KEY, BASE_URL } from "../store/apiFetchHelper";
 import type { Gif } from "../App";
 
 type Props = {
-  searchedGifs: Gif[];
-  setSearchGifs: React.Dispatch<React.SetStateAction<Gif[]>>;
+  // gifs: Gif[];
+  setGifs: React.Dispatch<React.SetStateAction<Gif[]>>;
 };
 
-export default function SearchBar({ searchedGifs, setSearchGifs }: Props) {
+export default function SearchBar({ setGifs }: Props) {
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleSubmitSearch = () => {
@@ -21,7 +21,7 @@ export default function SearchBar({ searchedGifs, setSearchGifs }: Props) {
           )}&limit=10`,
         );
         const json = await response.json();
-        setSearchGifs(json.data);
+        setGifs(json.data);
       } catch (error) {
         console.error("Error fetching searched GIFs:", error);
       }
@@ -49,11 +49,6 @@ export default function SearchBar({ searchedGifs, setSearchGifs }: Props) {
           <SearchIcon className={styles.searchIcon} />
         </div>
         <button onClick={handleSubmitSearch}>Search</button>
-      </div>
-      <div>
-        {searchedGifs.map((gif) => (
-          <img key={gif.id} src={gif.images.fixed_height.url} alt={gif.title} />
-        ))}
       </div>
     </>
   );

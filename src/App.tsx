@@ -10,8 +10,8 @@ export type Gif = {
   id: string;
   title: string;
   images: {
-    fixed_height: {
-      url: string;
+    original: {
+      mp4: string;
     };
   };
 };
@@ -20,7 +20,7 @@ function App() {
   // const [count, setCount] = useState(0);
 
   const [gifs, setGifs] = useState<Gif[]>([]);
-  const [searchedGifs, setSearchGifs] = useState<Gif[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const [loading, setLoading] = useState(true);
 
@@ -29,7 +29,7 @@ function App() {
       try {
         setLoading(true);
         const response = await fetch(
-          `${BASE_URL}trending?api_key=${API_KEY}&limit=10`,
+          `${BASE_URL}trending?api_key=${API_KEY}&limit=10&bundle=low_bandwidth`,
         );
         const json = await response.json();
         setGifs(json.data);
@@ -48,25 +48,35 @@ function App() {
   }, [API_KEY]);
 
   return (
-    <>
+    <div className={styles.App}>
       {loading ? (
         <p>Loading GIFs...</p>
       ) : (
         <div className={styles.trendingContent}>
-          <p>Trending Gifs:</p>
-          <span>
-            {gifs.map((gif) => (
-              <img
-                key={gif.id}
-                src={gif.images.fixed_height.url}
-                alt={gif.title}
-              />
-            ))}
-          </span>
+          <SearchBar setGifs={setGifs} />
+          <section>
+            <p>Trending Gifs:</p>
+            <div className={styles.masonryContainer}>
+              {gifs.map((gif) => (
+                <video
+                  className={styles.masonryItem}
+                  width="320"
+                  loop
+                  autoPlay
+                  muted
+                  key={gif.id}
+                >
+                  <source
+                    src={gif.images.original.mp4}
+                    type="video/mp4"
+                  ></source>
+                </video>
+              ))}
+            </div>
+          </section>
         </div>
       )}
-      <SearchBar searchedGifs={searchedGifs} setSearchGifs={setSearchGifs} />
-    </>
+    </div>
   );
 }
 

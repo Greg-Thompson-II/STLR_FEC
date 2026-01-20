@@ -1,9 +1,15 @@
+.content {
+  width: 100%;
+}
+
 .trendingContent {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 20px;
+
   padding: 20px;
+  width: calc(100% - 20px);
 
   span {
     display: flex;
@@ -13,12 +19,26 @@
     width: 100%;
     // align-items: center;
 
-    img {
-      aspect-ratio: 4/3;
+    video {
       object-fit: contain;
 
       height: auto;
       max-width: 25%;
     }
+  }
+
+  .masonryContainer {
+    column-width: 320px;
+    column-gap: 0px;
+
+    contain: layout;
+  }
+
+  masonryItem {
+    break-inside: avoid;
+    margin-bottom: 16px;
+
+    display: block;
+    width: 100%;
   }
 }
