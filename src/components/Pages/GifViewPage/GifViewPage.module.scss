@@ -1,0 +1,32 @@
+.GifContentPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.returnToHomeButton {
+  position: absolute;
+  top: 10%;
+  left: 10%;
+
+  height: fit-content;
+
+  padding: 3px 15px;
+  span {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+  }
+}
+
+.urlContainer {
+  display: flex;
+  flex-direction: row;
+  .urlLink:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    color: rgb(71, 50, 255);
+  }
+}

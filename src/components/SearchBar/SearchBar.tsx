@@ -1,36 +1,33 @@
-import React from "react";
+import React, { useRef } from "react";
 import styles from "./SearchBar.module.scss";
 import { SearchIcon } from "../../assets/icons/SearchIcon";
-import { API_KEY, BASE_URL } from "../../store/apiFetchHelper";
-import type { Gif } from "../../App";
 
 type Props = {
   searchTerm: string;
   setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
-  setGifs: React.Dispatch<React.SetStateAction<Gif[]>>;
+  handleSubmitSearch: (debouncedSearchTerm?: string) => void;
 };
 
 export default function SearchBar({
   searchTerm,
   setSearchTerm,
-  setGifs,
+  handleSubmitSearch,
 }: Props) {
-  const handleSubmitSearch = () => {
-    const fetchSearchedGifs = async () => {
-      try {
-        const response = await fetch(
-          `${BASE_URL}search?api_key=${API_KEY}&q=${encodeURIComponent(
-            searchTerm,
-          )}&limit=10`,
-        );
-        const json = await response.json();
-        setGifs(json.data);
-      } catch (error) {
-        console.error("Error fetching searched GIFs:", error);
-      }
-    };
+  const timeOutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-    fetchSearchedGifs();
+  const debouncedHandleSubmitSearch = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const newSearchTerm = event.target.value;
+    setSearchTerm(newSearchTerm);
+
+    if (timeOutRef.current) {
+      clearTimeout(timeOutRef.current);
+    }
+
+    timeOutRef.current = setTimeout(() => {
+      handleSubmitSearch(newSearchTerm);
+    }, 1000);
   };
 
   return (
@@ -42,14 +39,17 @@ export default function SearchBar({
             type="text"
             placeholder="Search for gifs..."
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={debouncedHandleSubmitSearch}
             onKeyDown={(event) => {
               if (event.key === "Enter") {
-                handleSubmitSearch();
+                handleSubmitSearch(searchTerm);
               }
             }}
           />
-          <button className={styles.searchButton} onClick={handleSubmitSearch}>
+          <button
+            className={styles.searchButton}
+            onClick={() => handleSubmitSearch(searchTerm)}
+          >
             <SearchIcon className={styles.searchIcon} />
           </button>
         </div>
