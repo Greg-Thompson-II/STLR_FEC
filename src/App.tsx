@@ -22,7 +22,7 @@ export type Gif = {
 function App() {
   const [searchURLValue, setSearchURLValue] = useQueryParam("search", "");
 
-  const [loading, setLoading] = useState<boolean>(true);
+  const [_loading, setLoading] = useState<boolean>(true);
 
   const [gifs, setGifs] = useState<Gif[]>([]);
   const [searchTerm, setSearchTerm] = useState("");

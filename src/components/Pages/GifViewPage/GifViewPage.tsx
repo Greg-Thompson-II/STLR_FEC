@@ -1,9 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import type { Gif } from "../../../App";
 import BackArrowIcon from "../../../assets/icons/BackArrowIcon";
-import CopyIcon from "../../../assets/icons/CopyIcon";
 import styles from "./GifViewPage.module.scss";
-import CheckIcon from "../../../assets/icons/CheckIcon";
 import CopyAlert from "../../CopyAlert/CopyAlert";
 
 type Props = {

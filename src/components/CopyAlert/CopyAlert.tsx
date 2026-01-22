@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./CopyAlert.module.scss";
 import CheckIcon from "../../assets/icons/CheckIcon";
 
