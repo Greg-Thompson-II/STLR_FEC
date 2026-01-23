@@ -15,6 +15,9 @@
     column-width: 320px;
     column-gap: 10px;
 
-    contain: layout;
+    width: 100%;
+    max-width: 1400px;
+
+    margin: 0 auto;
   }
 }
