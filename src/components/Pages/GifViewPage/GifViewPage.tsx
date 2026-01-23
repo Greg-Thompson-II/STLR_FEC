@@ -2,7 +2,7 @@ import { useState } from "react";
 import type { Gif } from "../../../App";
 import BackArrowIcon from "../../../assets/icons/BackArrowIcon";
 import styles from "./GifViewPage.module.scss";
-import CopyAlert from "../../CopyAlert/CopyAlert";
+import { CopyAlert } from "../../Alerts/Alerts";
 
 type Props = {
   gif: Gif;
@@ -26,6 +26,7 @@ export function GifViewPage({ gif, returnToPreviousPage }: Props) {
       console.error("Failed to copy URL:", error);
     }
   };
+
   return (
     <div className={styles.GifContentPage}>
       <button

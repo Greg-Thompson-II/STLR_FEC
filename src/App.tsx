@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 // import viteLogo from "/vite.svg";
 import "./App.css";
 import SearchBar from "./components/SearchBar/SearchBar";
-import { BASE_URL, API_KEY } from "./store/apiFetchHelper";
+import { fetchTrendingGifs, fetchSearchedGifs } from "./store/apiFetchHelper";
 import styles from "./App.module.scss";
 import GifVideoBlock from "./components/GifVideoBlock/GifVideoBlock";
 import { GifViewPage } from "./components/Pages/GifViewPage/GifViewPage";
 import { useQueryParam } from "./store/QueryParams";
+import { ErrorAlert } from "./components/Alerts/Alerts";
 
 export type Gif = {
   id: string;
@@ -22,41 +23,12 @@ export type Gif = {
 function App() {
   const [searchURLValue, setSearchURLValue] = useQueryParam("search", "");
 
-  const [_loading, setLoading] = useState<boolean>(true);
-
   const [gifs, setGifs] = useState<Gif[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
 
   const [selectedGif, setSelectedGif] = useState<Gif | null>(null);
 
-  const fetchSearchedGifs = async (newSearchTerm: string) => {
-    try {
-      const response = await fetch(
-        `${BASE_URL}search?api_key=${API_KEY}&q=${encodeURIComponent(
-          newSearchTerm,
-        )}&limit=10`,
-      );
-      const json = await response.json();
-      setGifs(json.data);
-    } catch (error) {
-      console.error("Error fetching searched GIFs:", error);
-    }
-  };
-
-  const fetchTrendingGifs = async () => {
-    try {
-      // setLoading(true);
-      const response = await fetch(
-        `${BASE_URL}trending?api_key=${API_KEY}&limit=10&bundle=low_bandwidth`,
-      );
-      const json = await response.json();
-      setGifs(json.data);
-      // setLoading(false);
-    } catch (error) {
-      console.error("Error fetching GIFs:", error);
-      // setLoading(false);
-    }
-  };
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   useEffect(() => {
     setSearchTerm(searchURLValue);
@@ -64,17 +36,15 @@ function App() {
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
       try {
         if (searchURLValue) {
-          await fetchSearchedGifs(searchURLValue);
+          await fetchSearchedGifs(searchURLValue, setGifs, setErrorMessage);
         } else {
-          await fetchTrendingGifs();
+          await fetchTrendingGifs(setGifs, setErrorMessage);
         }
       } catch (error) {
         console.error("Error fetching gifs:", error);
       } finally {
-        setLoading(false);
       }
     };
 
@@ -113,6 +83,8 @@ function App() {
           </section>
         </div>
       )}
+
+      {errorMessage && <ErrorAlert errorMessage={errorMessage} />}
     </div>
   );
 }

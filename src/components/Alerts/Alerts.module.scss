@@ -16,6 +16,11 @@
   animation: slideDown 0.3s ease-out;
 }
 
+.tooManyRequestsNotification {
+  @extend .copiedNotification;
+  background-color: rgb(204, 0, 0);
+}
+
 @keyframes slideDown {
   from {
     opacity: 0;

@@ -3,7 +3,7 @@ import type { Gif } from "../../App";
 import styles from "./GifVideoBlock.module.scss";
 import CopyIcon from "../../assets/icons/CopyIcon";
 import CheckIcon from "../../assets/icons/CheckIcon";
-import CopyAlert from "../CopyAlert/CopyAlert";
+import { CopyAlert } from "../Alerts/Alerts";
 
 type Props = {
   gif: Gif;
